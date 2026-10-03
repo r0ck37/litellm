@@ -32598,6 +32598,41 @@
           ]
         }
       },
+      "/.well-known/oauth-authorization-server/oauth/api": {
+        "get": {
+          "operationId": "oauth_authorization_server_api__well_known_oauth_authorization_server_oauth_api_get",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      ]
+                    },
+                    "title": "Response Oauth Authorization Server Api  Well Known Oauth Authorization Server Oauth Api Get",
+                    "type": "object"
+                  }
+                }
+              },
+              "description": "Successful Response"
+            }
+          },
+          "summary": "Oauth Authorization Server Api",
+          "tags": [
+            "mcp_byok_oauth"
+          ]
+        }
+      },
       "/.well-known/oauth-authorization-server/{mcp_server_name}": {
         "get": {
           "description": "OAuth authorization server discovery endpoint.\n\nSupports both legacy pattern (/{server_name}) and root endpoint.",
@@ -35013,6 +35048,41 @@
             }
           },
           "summary": "Oauth Authorization Server Mcp Standard",
+          "tags": [
+            "mcp_discoverable"
+          ]
+        }
+      },
+      "/.well-known/oauth-authorization-server/oauth/api": {
+        "get": {
+          "operationId": "oauth_authorization_server_api__well_known_oauth_authorization_server_oauth_api_get_2",
+          "responses": {
+            "200": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      ]
+                    },
+                    "title": "Response Oauth Authorization Server Api  Well Known Oauth Authorization Server Oauth Api Get",
+                    "type": "object"
+                  }
+                }
+              },
+              "description": "Successful Response"
+            }
+          },
+          "summary": "Oauth Authorization Server Api",
           "tags": [
             "mcp_discoverable"
           ]

@@ -16,6 +16,39 @@ from litellm.proxy._types import (
 from litellm.proxy.auth.auth_checks_organization import _user_is_org_admin
 from litellm.proxy.auth.route_checks import RouteChecks
 
+
+@pytest.mark.parametrize(
+    "route,allowed",
+    [
+        ("/key/generate", True),
+        ("/user/info", True),
+        ("/team/update", True),
+        ("/team/member_add", True),
+        ("/budget/new", True),
+        ("/budget/update", True),
+        ("/budget/info", True),
+        ("/budget/delete", True),
+        ("/organization/new", True),
+        ("/global/spend/logs", True),
+        ("/v1/chat/completions", True),
+        ("/mcp", False),
+        ("/mcp-rest/tools/call", False),
+        ("/v1/mcp/server", False),
+        ("/jwt/key/mapping/new", False),
+        ("/user/auth", False),
+        ("/user/password/change", False),
+        ("/session/logout", False),
+        ("/team/team-id/callback", False),
+        ("/config/yaml", False),
+        ("/global/spend/reset", False),
+        ("/custom/backend", False),
+        ("/key/generate\n", False),
+    ],
+)
+def test_delegated_admin_scope_limits_api_access(route: str, allowed: bool) -> None:
+    assert RouteChecks.is_delegated_admin_route(route) is allowed
+
+
 DAILY_ACTIVITY_ROUTE_PAIRS: Final[tuple[tuple[str, str], ...]] = (
     ("/user/daily/activity", "/user/daily/activity/aggregated"),
     ("/user/daily/activity", "/user/daily/activity/aggregated/keys"),

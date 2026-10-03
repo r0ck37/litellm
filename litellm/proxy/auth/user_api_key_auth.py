@@ -1577,6 +1577,16 @@ async def _user_api_key_auth_builder(
             _ensure_parent_otel_span_on_request_state(request)
             parent_otel_span = getattr(request.state, "parent_otel_span", None)
 
+        from litellm.proxy._experimental.mcp_server.outbound_credentials.session_credentials import (
+            is_session_bearer_shaped,
+        )
+        from litellm.proxy.auth.delegated_oauth import authenticate_delegated_request
+
+        if is_session_bearer_shaped(api_key):
+            delegated: Final = await authenticate_delegated_request(request, api_key, route)
+            delegated.parent_otel_span = parent_otel_span
+            return delegated
+
         ### USER-DEFINED AUTH FUNCTION ###
         if enterprise_custom_auth is not None:
             with tracer.trace("litellm.proxy.auth.enterprise_custom_auth"):
